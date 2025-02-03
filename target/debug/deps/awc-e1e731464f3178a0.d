@@ -1,0 +1,14 @@
+/Users/nikhil/Desktop/Rust/Realtime-chat-app/target/debug/deps/libawc-e1e731464f3178a0.rmeta: /Users/nikhil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/awc-2.0.3/src/lib.rs /Users/nikhil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/awc-2.0.3/src/builder.rs /Users/nikhil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/awc-2.0.3/src/connect.rs /Users/nikhil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/awc-2.0.3/src/error.rs /Users/nikhil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/awc-2.0.3/src/frozen.rs /Users/nikhil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/awc-2.0.3/src/request.rs /Users/nikhil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/awc-2.0.3/src/response.rs /Users/nikhil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/awc-2.0.3/src/sender.rs /Users/nikhil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/awc-2.0.3/src/test.rs /Users/nikhil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/awc-2.0.3/src/ws.rs
+
+/Users/nikhil/Desktop/Rust/Realtime-chat-app/target/debug/deps/awc-e1e731464f3178a0.d: /Users/nikhil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/awc-2.0.3/src/lib.rs /Users/nikhil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/awc-2.0.3/src/builder.rs /Users/nikhil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/awc-2.0.3/src/connect.rs /Users/nikhil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/awc-2.0.3/src/error.rs /Users/nikhil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/awc-2.0.3/src/frozen.rs /Users/nikhil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/awc-2.0.3/src/request.rs /Users/nikhil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/awc-2.0.3/src/response.rs /Users/nikhil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/awc-2.0.3/src/sender.rs /Users/nikhil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/awc-2.0.3/src/test.rs /Users/nikhil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/awc-2.0.3/src/ws.rs
+
+/Users/nikhil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/awc-2.0.3/src/lib.rs:
+/Users/nikhil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/awc-2.0.3/src/builder.rs:
+/Users/nikhil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/awc-2.0.3/src/connect.rs:
+/Users/nikhil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/awc-2.0.3/src/error.rs:
+/Users/nikhil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/awc-2.0.3/src/frozen.rs:
+/Users/nikhil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/awc-2.0.3/src/request.rs:
+/Users/nikhil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/awc-2.0.3/src/response.rs:
+/Users/nikhil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/awc-2.0.3/src/sender.rs:
+/Users/nikhil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/awc-2.0.3/src/test.rs:
+/Users/nikhil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/awc-2.0.3/src/ws.rs:
