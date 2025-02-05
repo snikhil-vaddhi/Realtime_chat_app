@@ -1,5 +1,5 @@
 use crate::db;
-use crate::models;
+use crate::model;
 use crate::server;
 use crate::session;
 use actix::*;
@@ -42,7 +42,7 @@ pub async fn chat_server(
 #[post("/users/create")]
 pub async fn create_user(
     pool: web::Data<DbPool>,
-    form: web::Json<models::NewUser>,
+    form: web::Json<model::NewUser>,
 ) -> Result<HttpResponse, Error> {
     let user = web::block(move || {
         let mut conn = pool.get()?;

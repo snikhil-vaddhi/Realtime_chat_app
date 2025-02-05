@@ -6,9 +6,10 @@ use diesel::{
     prelude::*,
     r2d2::{self, ConnectionManager},
 };
+use dotenv::dotenv;
 
 mod db;
-mod models;
+mod model;
 mod routes;
 mod schema;
 mod server;
@@ -16,6 +17,7 @@ mod session;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
+    dotenv().ok();
     let server = server::ChatServer::new().start();
     let conn_spec = "chat.db";
     let manager = ConnectionManager::<SqliteConnection>::new(conn_spec);

@@ -1,5 +1,5 @@
 use crate::db;
-use crate::models::NewConversation;
+use crate::model::NewConversation;
 use crate::server;
 use acix_web::web;
 use actix::prelude::*;
