@@ -3,6 +3,7 @@ use actix::prelude::*;
 use rand::{self, Rng, rngs::ThreadRng};
 use serde_json::json;
 use std::collections::{HashMap, HashSet};
+
 #[derive(Message)]
 #[rtype(result = "()")]
 pub struct Message(pub String);
@@ -16,17 +17,20 @@ pub struct Connect {
 pub struct Disconnect {
     pub id: usize,
 }
+
 #[derive(Message)]
 #[rtype(result = "()")]
-pub struct ClientMessage {
+pub struct ClinetMessage {
     pub id: usize,
     pub msg: String,
     pub room: String,
 }
+
 pub struct ListRooms;
 impl actix::Message for ListRooms {
     type Result = Vec<String>;
 }
+
 #[derive(Message)]
 #[rtype(result = "()")]
 pub struct Join {
