@@ -1,4 +1,8 @@
 /target/
-/chat.db/
+/chat.db
 /database.db/
-/.env/
+/.env
+/node_modules/
+/.vscode/
+/.idea/
+*.log
