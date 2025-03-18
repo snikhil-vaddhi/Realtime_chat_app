@@ -1,5 +1,7 @@
 use crate::schema::*;
+use diesel::prelude::*;
 use serde::{Deserialize, Serialize};
+
 #[derive(Debug, Clone, Serialize, Deserialize, Queryable, Insertable)]
 pub struct User {
     pub id: String,
@@ -7,6 +9,7 @@ pub struct User {
     pub phone: String,
     pub created_at: String,
 }
+
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, Queryable, Insertable)]
 pub struct Conversation {
     pub id: String,
@@ -15,6 +18,7 @@ pub struct Conversation {
     pub content: String,
     pub created_at: String,
 }
+
 #[derive(Debug, Clone, Serialize, Deserialize, Queryable, Insertable)]
 pub struct Room {
     pub id: String,

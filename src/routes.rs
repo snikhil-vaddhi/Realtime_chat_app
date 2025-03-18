@@ -6,14 +6,11 @@ use actix::*;
 use actix_files::NamedFile;
 use actix_web::{Error, HttpRequest, HttpResponse, Responder, get, post, web};
 use actix_web_actors::ws;
-use diesel::{
-    prelude::*,
-    r2d2::{self, ConnectionManager},
-};
+use diesel::sqlite::SqliteConnection;
 use serde_json::json;
+use std::sync::Mutex;
 use std::time::Instant;
 use uuid::Uuid;
-type DbPool = r2d2::Pool<ConnectionManager<SqliteConnection>>;
 
 pub async fn index() -> impl Responder {
     NamedFile::open_async("./static/index.html").await.unwrap()
@@ -22,7 +19,7 @@ pub async fn index() -> impl Responder {
 pub async fn chat_server(
     req: HttpRequest,
     stream: web::Payload,
-    pool: web::Data<DbPool>,
+    conn: web::Data<Mutex<SqliteConnection>>,
     srv: web::Data<Addr<server::ChatServer>>,
 ) -> Result<HttpResponse, Error> {
     ws::start(
@@ -32,7 +29,7 @@ pub async fn chat_server(
             room: "main".to_string(),
             name: None,
             addr: srv.get_ref().clone(),
-            db_pool: pool,
+            db_conn: conn,
         },
         &req,
         stream,
@@ -41,30 +38,24 @@ pub async fn chat_server(
 
 #[post("/users/create")]
 pub async fn create_user(
-    pool: web::Data<DbPool>,
+    conn: web::Data<Mutex<SqliteConnection>>,
     form: web::Json<model::NewUser>,
 ) -> Result<HttpResponse, Error> {
-    let user = web::block(move || {
-        let mut conn = pool.get()?;
-        db::insert_new_user(&mut conn, &form.username, &form.phone)
-    })
-    .await?
-    .map_err(actix_web::error::ErrorUnprocessableEntity)?;
+    let mut conn = conn.lock().unwrap(); // Lock the Mutex to access the connection
+    let user = db::insert_new_user(&mut conn, &form.username, &form.phone)
+        .map_err(actix_web::error::ErrorUnprocessableEntity)?;
     Ok(HttpResponse::Ok().json(user))
 }
 
 #[get("users/{user_id}")]
 pub async fn get_user_by_id(
-    pool: web::Data<DbPool>,
+    conn: web::Data<Mutex<SqliteConnection>>,
     id: web::Path<Uuid>,
 ) -> Result<HttpResponse, Error> {
     let user_id = id.to_owned();
-    let user = web::block(move || {
-        let mut conn = pool.get()?;
-        db::find_user_by_uid(&mut conn, user_id)
-    })
-    .await?
-    .map_err(actix_web::error::ErrorInternalServerError)?;
+    let mut conn = conn.lock().unwrap(); // Lock the Mutex to access the connection
+    let user = db::find_user_by_uid(&mut conn, user_id)
+        .map_err(actix_web::error::ErrorInternalServerError)?;
     if let Some(user) = user {
         Ok(HttpResponse::Ok().json(user))
     } else {
@@ -81,16 +72,13 @@ pub async fn get_user_by_id(
 
 #[get("/conversations/{uid}")]
 pub async fn get_conversation_by_id(
-    pool: web::Data<DbPool>,
+    conn: web::Data<Mutex<SqliteConnection>>,
     uid: web::Path<Uuid>,
 ) -> Result<HttpResponse, Error> {
     let room_id = uid.to_owned();
-    let conversations = web::block(move || {
-        let mut conn = pool.get()?;
-        db::get_conversation_by_room_uid(&mut conn, room_id)
-    })
-    .await?
-    .map_err(actix_web::error::ErrorInternalServerError)?;
+    let mut conn = conn.lock().unwrap(); // Lock the Mutex to access the connection
+    let conversations = db::get_conversation_by_room_uid(&mut conn, room_id)
+        .map_err(actix_web::error::ErrorInternalServerError)?;
     if let Some(data) = conversations {
         Ok(HttpResponse::Ok().json(data))
     } else {
@@ -107,17 +95,13 @@ pub async fn get_conversation_by_id(
 
 #[get("/users/phone/{user_phone}")]
 pub async fn get_user_by_phone(
-    pool: web::Data<DbPool>,
+    conn: web::Data<Mutex<SqliteConnection>>,
     phone: web::Path<String>,
 ) -> Result<HttpResponse, Error> {
     let user_phone = phone.to_string();
-    let user = web::block(move || {
-        let mut conn = pool.get()?;
-        db::find_user_by_phone(&mut conn, user_phone)
-    })
-    .await?
-    .map_err(actix_web::error::ErrorInternalServerError)?;
-
+    let mut conn = conn.lock().unwrap(); // Lock the Mutex to access the connection
+    let user = db::find_user_by_phone(&mut conn, user_phone)
+        .map_err(actix_web::error::ErrorInternalServerError)?;
     if let Some(user) = user {
         Ok(HttpResponse::Ok().json(user))
     } else {
@@ -133,14 +117,9 @@ pub async fn get_user_by_phone(
 }
 
 #[get("/rooms")]
-pub async fn get_rooms(pool: web::Data<DbPool>) -> Result<HttpResponse, Error> {
-    let rooms = web::block(move || {
-        let mut conn = pool.get()?;
-        db::get_all_rooms(&mut conn)
-    })
-    .await?
-    .map_err(actix_web::error::ErrorInternalServerError)?;
-
+pub async fn get_rooms(conn: web::Data<Mutex<SqliteConnection>>) -> Result<HttpResponse, Error> {
+    let mut conn = conn.lock().unwrap(); // Lock the Mutex to access the connection
+    let rooms = db::get_all_rooms(&mut conn).map_err(actix_web::error::ErrorInternalServerError)?;
     if !rooms.is_empty() {
         Ok(HttpResponse::Ok().json(rooms))
     } else {
